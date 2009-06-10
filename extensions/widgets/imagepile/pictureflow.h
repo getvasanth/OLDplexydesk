@@ -1,50 +1,7 @@
-/*******************************************************************************
-* This file is part of PlexyDesk.
-*  Maintained by : Siraj Razick <siraj@kde.org>
-*  Authored By  :
-*
-*  PlexyDesk is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU Lesser General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  PlexyDesk is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU Lesser General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with PlexyDesk. If not, see <http://www.gnu.org/licenses/lgpl.html>
-*******************************************************************************/
-/*
-  PictureFlow - animated image show widget
-  http://pictureflow.googlecode.com
-
-  Copyright (C) 2007 Ariya Hidayat (ariya@kde.org)
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-*/
-
 #ifndef PICTUREFLOW_H
 #define PICTUREFLOW_H
 
-#include <qwidget.h>
+#include <QWidget>
 
 class PictureFlowPrivate;
 
@@ -68,6 +25,14 @@ Q_OBJECT
   Q_PROPERTY(int centerIndex READ centerIndex WRITE setCenterIndex)
 
 public:
+
+  enum ReflectionEffect
+  {
+    NoReflection,
+    PlainReflection,
+    BlurredReflection
+  };
+
   /*!
     Creates a new PictureFlow widget.
   */  
@@ -78,8 +43,14 @@ public:
   */
   ~PictureFlow();
 
+  /*!
+    Returns the background color.
+  */
   QColor backgroundColor() const;
 
+  /*!
+    Sets the background color. By default it is black.
+  */
   void setBackgroundColor(const QColor& c);
 
   /*!
@@ -106,6 +77,17 @@ public:
     Returns the index of slide currently shown in the middle of the viewport.
   */  
   int centerIndex() const;
+
+  /*!
+    Returns the effect applied to the reflection.
+  */  
+  ReflectionEffect reflectionEffect() const;
+
+  /*!
+    Sets the effect applied to the reflection. The default is PlainReflection.
+  */  
+  void setReflectionEffect(ReflectionEffect effect);
+
 
 public slots:
 
@@ -169,10 +151,13 @@ public slots:
   */  
   void triggerRender();
 
+signals:
+  void centerIndexChanged(int index);
 
 protected:
   void paintEvent(QPaintEvent *event);
   void keyPressEvent(QKeyEvent* event);
+  void mousePressEvent(QMouseEvent* event);
   void resizeEvent(QResizeEvent* event);
 
 private slots:
