@@ -6,7 +6,10 @@ WallpaperConfig::WallpaperConfig(QWidget *parent)
     : QDialog(parent), ui(new Ui::WallpaperConfigClass)
 {
     ui->setupUi(this);
+    ui->settings->setCheckable(true);
     Browser *w = new Browser();
+    //setAutoFillBackground(true);
+    //setPalette(QPalette(QColor(Qt::black)));
 
     #if defined(_WS_QWS) || defined(Q_WS_QWS)
         w->showFullScreen();
@@ -18,7 +21,7 @@ WallpaperConfig::WallpaperConfig(QWidget *parent)
         #else
             w->setSlideSize(QSize(3*40, 5*40));
             w->resize(750, 270);
-        #endif
+   #endif
 
         QStringList files = findFiles("/usr/share/wallpapers/Blue_Curl/contents/images");
           QImage img;
@@ -38,8 +41,26 @@ WallpaperConfig::WallpaperConfig(QWidget *parent)
 
      setLayout(browser_holder);
      show();
+     settingsWindow = new Settings(this);
+   
+     connect(ui->settings, SIGNAL(toggled(bool)), this, SLOT(showSettings()));
 
+     settingsWindow->setGeometry(this->width()/4, 0, this->width()/2, this->height()/2);
+
+
+    qDebug () << settingsWindow->image_path;
 }
+
+void WallpaperConfig::showSettings()
+{
+    if( settingsWindow->isVisible() )   {
+           settingsWindow->setVisible(false);
+    }
+    else {
+          settingsWindow->setVisible(true);
+    }
+}
+
 
 QStringList WallpaperConfig::findFiles(const QString& path)
 {
@@ -57,6 +78,7 @@ QStringList WallpaperConfig::findFiles(const QString& path)
   }
   return files;
 }
+
 WallpaperConfig::~WallpaperConfig()
 {
     delete ui;

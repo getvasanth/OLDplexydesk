@@ -2,6 +2,8 @@
 #define WALLPAPERCONFIG_H
 
 #include <QtGui/QDialog>
+#include <QtDebug>
+#include "settings.h"
 
 namespace Ui
 {
@@ -17,7 +19,11 @@ public:
     QStringList findFiles(const QString& path);
     ~WallpaperConfig();
 
+private slots:
+     void showSettings();
+
 private:
+    Settings *settingsWindow;
     Ui::WallpaperConfigClass *ui;
 };
 
