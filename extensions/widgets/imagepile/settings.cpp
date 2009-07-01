@@ -1,4 +1,5 @@
 #include "settings.h"
+#include "constants.h"
 #include "ui_settings.h"
 
 
@@ -26,6 +27,11 @@ void Settings::get_image_path(QString path)
     image_path = path;
     qDebug () << "settings "<< image_path;
 }
+
+void Settings::resizeEvent(QResizeEvent*) {
+        if (this->height() != height())
+            this->resize(PANEL_WIDTH, height());
+    }
 
 Settings::~Settings()
 {

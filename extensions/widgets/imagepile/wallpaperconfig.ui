@@ -53,13 +53,20 @@
     <rect>
      <x>20</x>
      <y>360</y>
-     <width>399</width>
+     <width>515</width>
      <height>27</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
-     <widget class="QPushButton" name="settings">
+     <widget class="QPushButton" name="hideButton">
+      <property name="text">
+       <string>Settings</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="showButton">
       <property name="text">
        <string>Settings</string>
       </property>

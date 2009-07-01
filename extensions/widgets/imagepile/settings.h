@@ -21,6 +21,9 @@ public:
 private slots:
     void set_image_path();
 
+protected:
+    void resizeEvent(QResizeEvent*);
+
 private:
     Ui::SettingsClass  *ui;
     QString dir;
