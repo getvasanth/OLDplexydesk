@@ -6,8 +6,8 @@ WallpaperConfig::WallpaperConfig(QWidget *parent)
     : QDialog(parent), ui(new Ui::WallpaperConfigClass)
 {
     ui->setupUi(this);
-    Browser *w = new Browser();
     settingsWindow = new Settings(this);
+    Browser *w = new Browser();
     m_timeLine = new CustomTimeLine;
     //setAutoFillBackground(true);
     //setPalette(QPalette(QColor(Qt::black)));
@@ -29,7 +29,7 @@ WallpaperConfig::WallpaperConfig(QWidget *parent)
    browser_holder->addWidget(w, 1, 0, 1, 2);
    browser_holder->addWidget(ui->layoutWidget1, 2, 0);
 
-   QStringList files = findFiles("/usr/share/wallpapers/Blue_Curl/contents/images");
+   QStringList files = settingsWindow->findFiles("/usr/share/wallpapers/Blue_Curl/contents/images");
    QImage img;
    for(int i = 0; i < (int)files.count(); i++)
         if(img.load(files[i])) {
@@ -79,24 +79,8 @@ void WallpaperConfig::resizeEvent(QResizeEvent*) {
         settingsWindow->setGeometry(this->width()/4, 0, this->width()/2, pos);
         qreal t = static_cast<qreal>(m_timeLine->currentTime());
         qreal x = t * PANEL_WIDTH / m_timeLine->duration();
-    }
+ }
 
-QStringList WallpaperConfig::findFiles(const QString& path)
-{
-  QStringList files;
-  QDir dir = QDir::current();
-  if(!path.isEmpty())
-    dir = QDir(path);
-
-  dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
-  QFileInfoList list = dir.entryInfoList();
-  for (int i = 0; i < list.size(); ++i)
-  {
-    QFileInfo fileInfo = list.at(i);
-    files.append(dir.absoluteFilePath(fileInfo.fileName()));
-  }
-  return files;
-}
 
 WallpaperConfig::~WallpaperConfig()
 {

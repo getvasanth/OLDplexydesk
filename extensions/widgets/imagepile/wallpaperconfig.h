@@ -59,7 +59,7 @@ class WallpaperConfig : public QDialog
 
 public:
     WallpaperConfig(QWidget *parent = 0);
-    QStringList findFiles(const QString& path);
+
     ~WallpaperConfig();
 
 private slots:

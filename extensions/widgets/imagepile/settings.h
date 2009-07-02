@@ -17,6 +17,7 @@ public:
     ~Settings();
     void get_image_path(QString);
     QString image_path;
+    QStringList findFiles(const QString& path);
 
 private slots:
     void set_image_path();
